@@ -1,0 +1,43 @@
+HEADER    
+TITLE     MDANALYSIS FRAME 0: Created by PDBWriter
+REMARK     LIGPARGEN GENERATED PDB FILE
+CRYST1    1.000    1.000    1.000  90.00  90.00  90.00 P 1           1
+REMARK     285 UNITARY VALUES FOR THE UNIT CELL AUTOMATICALLY SET
+REMARK     285 BY MDANALYSIS PDBWRITER BECAUSE UNIT CELL INFORMATION
+REMARK     285 WAS MISSING.
+REMARK     285 PROTEIN DATA BANK CONVENTIONS REQUIRE THAT
+REMARK     285 CRYST1 RECORD IS INCLUDED, BUT THE VALUES ON
+REMARK     285 THIS RECORD ARE MEANINGLESS.
+ATOM      1  C00 DME X   1       1.000   1.000   0.000  0.00  1.00      SYST C  
+ATOM      2  O01 DME X   1      -0.422   1.000   0.000  0.00  1.00      SYST O  
+ATOM      3  C02 DME X   1      -0.942   1.000   1.329  0.00  1.00      SYST C  
+ATOM      4  C03 DME X   1      -2.465   1.002   1.276  0.00  1.00      SYST C  
+ATOM      5  O04 DME X   1      -2.985   1.004   2.605  0.00  1.00      SYST O  
+ATOM      6  C05 DME X   1      -4.407   1.007   2.605  0.00  1.00      SYST C  
+ATOM      7  H06 DME X   1       1.344   0.999  -1.038  0.00  1.00      SYST H  
+ATOM      8  H07 DME X   1       1.382   0.102   0.496  0.00  1.00      SYST H  
+ATOM      9  H08 DME X   1       1.382   1.899   0.493  0.00  1.00      SYST H  
+ATOM     10  H09 DME X   1      -0.588   1.886   1.871  0.00  1.00      SYST H  
+ATOM     11  H10 DME X   1      -0.590   0.113   1.870  0.00  1.00      SYST H  
+ATOM     12  H11 DME X   1      -2.818   0.115   0.735  0.00  1.00      SYST H  
+ATOM     13  H12 DME X   1      -2.816   1.888   0.734  0.00  1.00      SYST H  
+ATOM     14  H13 DME X   1      -4.750   1.009   3.643  0.00  1.00      SYST H  
+ATOM     15  H14 DME X   1      -4.791   0.109   2.112  0.00  1.00      SYST H  
+ATOM     16  H15 DME X   1      -4.787   1.905   2.109  0.00  1.00      SYST H  
+CONECT    1    2    7    8    9
+CONECT    2    1    3
+CONECT    3    2    4   10   11
+CONECT    4    3    5   12   13
+CONECT    5    4    6
+CONECT    6    5   14   15   16
+CONECT    7    1
+CONECT    8    1
+CONECT    9    1
+CONECT   10    3
+CONECT   11    3
+CONECT   12    4
+CONECT   13    4
+CONECT   14    6
+CONECT   15    6
+CONECT   16    6
+END
