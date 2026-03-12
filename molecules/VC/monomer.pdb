@@ -13,9 +13,9 @@ ATOM      2  C01 VCA X   1      -0.225   1.000   0.000  0.00  1.00      SYST C
 ATOM      3  O02 VCA X   1      -0.979   1.000   1.169  0.00  1.00      SYST O  
 ATOM      4  C03 VCA X   1      -2.245   0.998   0.655  0.00  1.00      SYST C  
 ATOM      5  C04 VCA X   1      -2.245   0.997  -0.653  0.00  1.00      SYST C  
-ATOM      6  O05 VCA X   1      -0.979   0.999  -1.169  0.00  1.00      SYST O  
-ATOM      7  H06 VCA X   1      -3.059   0.999   1.357  0.00  1.00      SYST H  
-ATOM      8  H07 VCA X   1      -3.060   0.995  -1.353  0.00  1.00      SYST H  
+ATOM      6  O05 VCA X   1      -0.980   0.999  -1.169  0.00  1.00      SYST O  
+ATOM      7  H06 VCA X   1      -3.059   0.997   1.357  0.00  1.00      SYST H  
+ATOM      8  H07 VCA X   1      -3.060   0.997  -1.353  0.00  1.00      SYST H  
 CONECT    1    2
 CONECT    2    1    3    6
 CONECT    3    2    4
