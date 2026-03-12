@@ -5,90 +5,71 @@ import openmm.app as app
 import openmm.unit as unit
 
 # ================= MD 仿真配置 =================
-# 1. 输入文件
-PDB_FILE = "init_system.pdb"  # 由建模脚本生成的初始构型
-FF_FILES = ["../../forcefields/opls_solvent.xml", "../../forcefields/opls_salt.xml"]
-
-# 2. 模拟参数
+PDB_FILE = 'init_system.pdb'
+FF_FILES = ['forcefields/opls_solvent.xml', 'forcefields/opls_salt.xml']
 TEMPERATURE = 298.15 * unit.kelvin
 PRESSURE = 1.0 * unit.bar
 TIMESTEP = 0.002 * unit.picoseconds
-TOTAL_STEPS = 5000000  # 10 ns (5M * 2fs)
-REPORT_STEPS = 5000    # 每 10 ps 记录一次数据
-
-# 3. 输出文件
-OUTPUT_TRAJ = "trajectory.dcd"
-OUTPUT_LOG = "simulation.log"
-CHECKPOINT = "checkpoint.chk"
+TOTAL_STEPS = 5000000  # 10 ns
+REPORT_STEPS = 5000    # 10 ps
 # ===============================================
 
 def run_npt_simulation():
-    print("--- Starting Bulk MD (NPT) Simulation ---")
-    
-    # 1. 加载构型与力场
+    print('--- Starting Bulk MD (NPT) Simulation ---')
     if not os.path.exists(PDB_FILE):
-        print(f"Error: {PDB_FILE} not found. Please build the system first.")
+        print(f'Error: {PDB_FILE} not found.')
         return
 
     pdb = app.PDBFile(PDB_FILE)
+    topology = pdb.topology
+    topology.setUnitCellDimensions((3.0, 3.0, 3.0)*unit.nanometer)
+
+    for res in topology.residues():
+        at = {a.name.strip(): a for a in res.atoms()}
+        if res.name == 'PF6':
+            p = at['P01']
+            for i in range(2, 8): topology.addBond(p, at[f'F{i:02d}'])
+        elif res.name == 'PC':
+            c00, c01, c02, o03, c04, o05, o06 = at['C00'], at['C01'], at['C02'], at['O03'], at['C04'], at['O05'], at['O06']
+            topology.addBond(c00, c01); topology.addBond(c01, c02); topology.addBond(c02, o03)
+            topology.addBond(o03, c04); topology.addBond(c04, o05); topology.addBond(c04, o06)
+            topology.addBond(c01, o06)
+            for h in ['H07', 'H08', 'H09']: topology.addBond(c00, at[h])
+            topology.addBond(c01, at['H10'])
+            for h in ['H11', 'H12']: topology.addBond(c02, at[h])
+        elif res.name == 'DMC':
+            c00, o01, c02, o03, o04, c05 = at['C00'], at['O01'], at['C02'], at['O03'], at['O04'], at['C05']
+            topology.addBond(c00, o01); topology.addBond(o01, c02); topology.addBond(c02, o03)
+            topology.addBond(c02, o04); topology.addBond(o04, c05)
+            for h in ['H06', 'H07', 'H08']: topology.addBond(c00, at[h])
+            for h in ['H09', 'H10', 'H11']: topology.addBond(c05, at[h])
+
     forcefield = app.ForceField(*FF_FILES)
-    
-    # 2. 创建 OpenMM 系统
-    # 注意：电解液系统必须使用 PME 处理离子间的长程静电
-    system = forcefield.createSystem(
-        pdb.topology,
-        nonbondedMethod=app.PME,
-        nonbondedCutoff=1.0 * unit.nanometer,
-        constraints=app.HBonds,  # 固定氢键以允许 2fs 步长
-        rigidWater=True
-    )
-    
-    # 添加压力计 (Barostat) 以实现 NPT 模拟
+    system = forcefield.createSystem(topology, nonbondedMethod=app.PME, 
+                                    nonbondedCutoff=1.0*unit.nanometer, constraints=app.HBonds)
     system.addForce(openmm.MonteCarloBarostat(PRESSURE, TEMPERATURE))
     
-    # 3. 设置积分器 (Langevin 热浴)
     integrator = openmm.LangevinMiddleIntegrator(TEMPERATURE, 1/unit.picosecond, TIMESTEP)
     
-    # 4. 选择计算平台 (强制 CUDA)
     try:
-        platform = openmm.Platform.getPlatformByName("CUDA")
+        platform = openmm.Platform.getPlatformByName('CUDA')
         properties = {'Precision': 'mixed'}
-        print(f"Using platform: CUDA (Acceleration Enabled)")
-    except Exception:
-        platform = openmm.Platform.getPlatformByName("Reference")
-        properties = {}
-        print("Warning: CUDA not found, falling back to CPU (Slow!)")
+        simulation = app.Simulation(topology, system, integrator, platform, properties)
+        simulation.context.setPositions(pdb.positions)
+        print('Platform: CUDA')
+    except:
+        platform = openmm.Platform.getPlatformByName('Reference')
+        simulation = app.Simulation(topology, system, integrator, platform)
+        simulation.context.setPositions(pdb.positions)
+        print('Platform: Reference')
 
-    # 5. 初始化仿真对象
-    simulation = app.Simulation(pdb.topology, system, integrator, platform, properties)
-    simulation.context.setPositions(pdb.positions)
-    
-    # 6. 能量最小化
-    print("Step 1: Minimizing energy...")
+    print('Minimizing...')
     simulation.minimizeEnergy()
     
-    # 7. 预平衡 (NVT -> NPT)
-    print("Step 2: Equilibration (100 ps)...")
-    simulation.step(50000) 
-    
-    # 8. 设置数据记录器
-    simulation.reporters.append(app.DCDReporter(OUTPUT_TRAJ, REPORT_STEPS))
-    simulation.reporters.append(app.StateDataReporter(
-        OUTPUT_LOG, REPORT_STEPS, step=True, potentialEnergy=True, 
-        temperature=True, density=True, speed=True, volume=True
-    ))
-    # 屏幕打印
-    simulation.reporters.append(app.StateDataReporter(
-        sys.stdout, REPORT_STEPS, step=True, potentialEnergy=True, density=True, speed=True
-    ))
-    
-    # 9. 正式生产运行
-    print(f"Step 3: Production Run ({TOTAL_STEPS} steps)...")
+    print(f'Running {TOTAL_STEPS} steps...')
+    simulation.reporters.append(app.StateDataReporter(sys.stdout, 100, step=True, potentialEnergy=True, density=True))
     simulation.step(TOTAL_STEPS)
-    
-    # 10. 保存最终状态
-    simulation.saveCheckpoint(CHECKPOINT)
-    print("--- Simulation Completed Successfully ---")
+    print('Success!')
 
 if __name__ == "__main__":
     run_npt_simulation()

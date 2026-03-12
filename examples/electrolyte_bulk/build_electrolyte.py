@@ -7,7 +7,7 @@ import openmm.unit as unit
 
 # ================= 配置部分 =================
 SOLVENTS = {"PC": 20, "DMC": 20} 
-FF_FILES = ["../../forcefields/opls_solvent.xml", "../../forcefields/opls_salt.xml"]
+FF_FILES = ["forcefields/opls_solvent.xml", "forcefields/opls_salt.xml"]
 # ===========================================
 
 def build_simple_pdb():
