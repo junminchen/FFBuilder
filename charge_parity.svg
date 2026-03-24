@@ -1,0 +1,238 @@
+<svg width="600" height="600" xmlns="http://www.w3.org/2000/svg" style="background:white">
+<line x1="60" y1="540" x2="540" y2="540" stroke="black" />
+<line x1="60" y1="60" x2="60" y2="540" stroke="black" />
+<line x1="60.0" y1="540.0" x2="540.0" y2="60.0" stroke="#ccc" stroke-dasharray="5,5" />
+<text x="300.0" y="590" text-anchor="middle" font-family="Arial" font-size="14">Original Charges (OPLS)</text>
+<text x="15" y="300.0" transform="rotate(-90,15,300.0)" text-anchor="middle" font-family="Arial" font-size="14">New Charges (CHelpG)</text>
+<text x="300.0" y="30" text-anchor="middle" font-family="Arial" font-size="18" font-weight="bold">Charge Parity Plot</text>
+<circle cx="398.13905508562004" cy="201.86094491437996" r="4" fill="red" fill-opacity="0.6">
+<title>LiA:Li01: 1.000 -> 1.000</title>
+</circle>
+<circle cx="398.13905508562004" cy="201.86094491437996" r="4" fill="red" fill-opacity="0.6">
+<title>NaA:Na01: 1.000 -> 1.000</title>
+</circle>
+<circle cx="280.24344955642664" cy="260.1402929647204" r="4" fill="red" fill-opacity="0.6">
+<title>BF4:B01: 0.286 -> 0.647</title>
+</circle>
+<text x="285.24344955642664" y="255.1402929647204" font-family="Arial" font-size="10" fill="black">BF4:B01</text>
+<circle cx="171.73922013616672" cy="434.8628017330307" r="4" fill="blue" fill-opacity="0.6">
+<title>BF4:F02: -0.372 -> -0.412</title>
+</circle>
+<circle cx="171.7227150814937" cy="434.8628017330307" r="4" fill="blue" fill-opacity="0.6">
+<title>BF4:F03: -0.372 -> -0.412</title>
+</circle>
+<circle cx="171.7722302455127" cy="434.8628017330307" r="4" fill="blue" fill-opacity="0.6">
+<title>BF4:F04: -0.371 -> -0.412</title>
+</circle>
+<circle cx="204.91438002888384" cy="434.8628017330307" r="4" fill="blue" fill-opacity="0.6">
+<title>BF4:F05: -0.171 -> -0.412</title>
+</circle>
+<text x="209.91438002888384" y="429.8628017330307" font-family="Arial" font-size="10" fill="black">BF4:F05</text>
+<circle cx="277.1404992779038" cy="252.6635031978543" r="4" fill="red" fill-opacity="0.6">
+<title>BOB:B01: 0.267 -> 0.692</title>
+</circle>
+<text x="282.1404992779038" y="247.6635031978543" font-family="Arial" font-size="10" fill="black">BOB:B01</text>
+<circle cx="186.9733855993398" cy="441.976480297091" r="4" fill="blue" fill-opacity="0.6">
+<title>BOB:O02: -0.279 -> -0.455</title>
+</circle>
+<text x="191.9733855993398" y="436.976480297091" font-family="Arial" font-size="10" fill="black">BOB:O02</text>
+<circle cx="289.1396740251702" cy="279.1211058386631" r="4" fill="red" fill-opacity="0.6">
+<title>BOB:C03: 0.340 -> 0.532</title>
+</circle>
+<text x="294.1396740251702" y="274.1211058386631" font-family="Arial" font-size="10" fill="black">BOB:C03</text>
+<circle cx="162.61192490200125" cy="449.4532700639571" r="4" fill="blue" fill-opacity="0.6">
+<title>BOB:O04: -0.427 -> -0.500</title>
+</circle>
+<circle cx="289.0901588611512" cy="279.1211058386631" r="4" fill="red" fill-opacity="0.6">
+<title>BOB:C05: 0.339 -> 0.532</title>
+</circle>
+<text x="294.0901588611512" y="274.1211058386631" font-family="Arial" font-size="10" fill="black">BOB:C05</text>
+<circle cx="162.6284299566742" cy="449.4532700639571" r="4" fill="blue" fill-opacity="0.6">
+<title>BOB:O06: -0.427 -> -0.500</title>
+</circle>
+<circle cx="186.9238704353208" cy="441.976480297091" r="4" fill="blue" fill-opacity="0.6">
+<title>BOB:O07: -0.280 -> -0.455</title>
+</circle>
+<text x="191.9238704353208" y="436.976480297091" font-family="Arial" font-size="10" fill="black">BOB:O07</text>
+<circle cx="187.05591087270477" cy="441.976480297091" r="4" fill="blue" fill-opacity="0.6">
+<title>BOB:O08: -0.279 -> -0.455</title>
+</circle>
+<text x="192.05591087270477" y="436.976480297091" font-family="Arial" font-size="10" fill="black">BOB:O08</text>
+<circle cx="289.1231689704972" cy="279.1211058386631" r="4" fill="red" fill-opacity="0.6">
+<title>BOB:C09: 0.340 -> 0.532</title>
+</circle>
+<text x="294.1231689704972" y="274.1211058386631" font-family="Arial" font-size="10" fill="black">BOB:C09</text>
+<circle cx="162.59541984732823" cy="449.4532700639571" r="4" fill="blue" fill-opacity="0.6">
+<title>BOB:O0A: -0.427 -> -0.500</title>
+</circle>
+<circle cx="289.1066639158242" cy="279.1211058386631" r="4" fill="red" fill-opacity="0.6">
+<title>BOB:C0B: 0.339 -> 0.532</title>
+</circle>
+<text x="294.1066639158242" y="274.1211058386631" font-family="Arial" font-size="10" fill="black">BOB:C0B</text>
+<circle cx="162.6449350113472" cy="449.4532700639571" r="4" fill="blue" fill-opacity="0.6">
+<title>BOB:O0C: -0.427 -> -0.500</title>
+</circle>
+<circle cx="220.06602021869196" cy="441.976480297091" r="4" fill="blue" fill-opacity="0.6">
+<title>BOB:O0D: -0.079 -> -0.455</title>
+</circle>
+<text x="225.06602021869196" y="436.976480297091" font-family="Arial" font-size="10" fill="black">BOB:O0D</text>
+<circle cx="176.49267588198887" cy="427.53455745822157" r="4" fill="blue" fill-opacity="0.6">
+<title>DFO:F01: -0.343 -> -0.367</title>
+</circle>
+<circle cx="278.70847947183825" cy="259.24902001237876" r="4" fill="red" fill-opacity="0.6">
+<title>DFO:B02: 0.276 -> 0.652</title>
+</circle>
+<text x="283.70847947183825" y="254.24902001237876" font-family="Arial" font-size="10" fill="black">DFO:B02</text>
+<circle cx="186.13162781101713" cy="442.37260160924285" r="4" fill="blue" fill-opacity="0.6">
+<title>DFO:O03: -0.284 -> -0.457</title>
+</circle>
+<text x="191.13162781101713" y="437.37260160924285" font-family="Arial" font-size="10" fill="black">DFO:O03</text>
+<circle cx="288.9416133690943" cy="278.9560552919332" r="4" fill="red" fill-opacity="0.6">
+<title>DFO:C04: 0.338 -> 0.533</title>
+</circle>
+<text x="293.9416133690943" y="273.9560552919332" font-family="Arial" font-size="10" fill="black">DFO:C04</text>
+<circle cx="288.9086032597483" cy="278.9560552919332" r="4" fill="red" fill-opacity="0.6">
+<title>DFO:C05: 0.338 -> 0.533</title>
+</circle>
+<text x="293.9086032597483" y="273.9560552919332" font-family="Arial" font-size="10" fill="black">DFO:C05</text>
+<circle cx="186.1646379203631" cy="442.37260160924285" r="4" fill="blue" fill-opacity="0.6">
+<title>DFO:O06: -0.284 -> -0.457</title>
+</circle>
+<text x="191.1646379203631" y="437.37260160924285" font-family="Arial" font-size="10" fill="black">DFO:O06</text>
+<circle cx="158.88178254590468" cy="455.1475139261399" r="4" fill="blue" fill-opacity="0.6">
+<title>DFO:O07: -0.450 -> -0.535</title>
+</circle>
+<circle cx="158.8487724365587" cy="455.1475139261399" r="4" fill="blue" fill-opacity="0.6">
+<title>DFO:O08: -0.450 -> -0.535</title>
+</circle>
+<circle cx="209.66783577470602" cy="427.53455745822157" r="4" fill="blue" fill-opacity="0.6">
+<title>DFO:F09: -0.142 -> -0.367</title>
+</circle>
+<text x="214.66783577470602" y="422.53455745822157" font-family="Arial" font-size="10" fill="black">DFO:F09</text>
+<circle cx="76.5050546729936" cy="470.94285124819476" r="4" fill="blue" fill-opacity="0.6">
+<title>FSI:N01: -0.949 -> -0.630</title>
+</circle>
+<text x="81.5050546729936" y="465.94285124819476" font-family="Arial" font-size="10" fill="black">FSI:N01</text>
+<circle cx="523.4949453270065" cy="182.59954611099647" r="4" fill="red" fill-opacity="0.6">
+<title>FSI:S02: 1.760 -> 1.117</title>
+</circle>
+<text x="528.4949453270065" y="177.59954611099647" font-family="Arial" font-size="10" fill="black">FSI:S02</text>
+<circle cx="106.41221374045801" cy="450.2125025789148" r="4" fill="blue" fill-opacity="0.6">
+<title>FSI:O03: -0.767 -> -0.505</title>
+</circle>
+<text x="111.41221374045801" y="445.2125025789148" font-family="Arial" font-size="10" fill="black">FSI:O03</text>
+<circle cx="106.34619352176603" cy="451.5659170621003" r="4" fill="blue" fill-opacity="0.6">
+<title>FSI:O04: -0.768 -> -0.513</title>
+</circle>
+<text x="111.34619352176603" y="446.5659170621003" font-family="Arial" font-size="10" fill="black">FSI:O04</text>
+<circle cx="176.04703940581803" cy="410.88095729317104" r="4" fill="blue" fill-opacity="0.6">
+<title>FSI:F05: -0.346 -> -0.266</title>
+</circle>
+<circle cx="519.8638332989478" cy="183.12770786053233" r="4" fill="red" fill-opacity="0.6">
+<title>FSI:S06: 1.738 -> 1.113</title>
+</circle>
+<text x="524.8638332989478" y="178.12770786053233" font-family="Arial" font-size="10" fill="black">FSI:S06</text>
+<circle cx="107.25397152878068" cy="453.2989478027646" r="4" fill="blue" fill-opacity="0.6">
+<title>FSI:O07: -0.762 -> -0.523</title>
+</circle>
+<text x="112.25397152878068" y="448.2989478027646" font-family="Arial" font-size="10" fill="black">FSI:O07</text>
+<circle cx="106.09861770167115" cy="452.19310913967405" r="4" fill="blue" fill-opacity="0.6">
+<title>FSI:O08: -0.769 -> -0.517</title>
+</circle>
+<text x="111.09861770167115" y="447.19310913967405" font-family="Arial" font-size="10" fill="black">FSI:O08</text>
+<circle cx="210.72415927377762" cy="412.43243243243245" r="4" fill="blue" fill-opacity="0.6">
+<title>FSI:F09: -0.136 -> -0.276</title>
+</circle>
+<circle cx="168.71879513100885" cy="423.4578089539922" r="4" fill="blue" fill-opacity="0.6">
+<title>PF6:F01: -0.390 -> -0.343</title>
+</circle>
+<circle cx="454.25624097379824" cy="192.70063957086853" r="4" fill="red" fill-opacity="0.6">
+<title>PF6:P02: 1.340 -> 1.056</title>
+</circle>
+<text x="459.25624097379824" y="187.70063957086853" font-family="Arial" font-size="10" fill="black">PF6:P02</text>
+<circle cx="168.71879513100885" cy="423.4578089539922" r="4" fill="blue" fill-opacity="0.6">
+<title>PF6:F03: -0.390 -> -0.343</title>
+</circle>
+<circle cx="168.71879513100885" cy="423.4578089539922" r="4" fill="blue" fill-opacity="0.6">
+<title>PF6:F04: -0.390 -> -0.343</title>
+</circle>
+<circle cx="168.71879513100885" cy="423.4578089539922" r="4" fill="blue" fill-opacity="0.6">
+<title>PF6:F05: -0.390 -> -0.343</title>
+</circle>
+<circle cx="168.71879513100885" cy="423.4578089539922" r="4" fill="blue" fill-opacity="0.6">
+<title>PF6:F06: -0.390 -> -0.343</title>
+</circle>
+<circle cx="168.71879513100885" cy="423.4578089539922" r="4" fill="blue" fill-opacity="0.6">
+<title>PF6:F07: -0.390 -> -0.343</title>
+</circle>
+<circle cx="273.29482153909635" cy="311.8671343098824" r="4" fill="red" fill-opacity="0.6">
+<title>TFS:C01: 0.244 -> 0.334</title>
+</circle>
+<circle cx="208.56199711161543" cy="387.5097998762121" r="4" fill="blue" fill-opacity="0.6">
+<title>TFS:F02: -0.149 -> -0.125</title>
+</circle>
+<circle cx="208.18238085413657" cy="394.1283268000825" r="4" fill="blue" fill-opacity="0.6">
+<title>TFS:F03: -0.151 -> -0.165</title>
+</circle>
+<circle cx="207.98432019806066" cy="391.1574169589437" r="4" fill="blue" fill-opacity="0.6">
+<title>TFS:F04: -0.152 -> -0.147</title>
+</circle>
+<circle cx="479.3604291314215" cy="202.65318753868377" r="4" fill="red" fill-opacity="0.6">
+<title>TFS:S05: 1.492 -> 0.995</title>
+</circle>
+<text x="484.3604291314215" y="197.65318753868377" font-family="Arial" font-size="10" fill="black">TFS:S05</text>
+<circle cx="116.31524654425417" cy="456.3523829172684" r="4" fill="blue" fill-opacity="0.6">
+<title>TFS:O06: -0.708 -> -0.542</title>
+</circle>
+<text x="121.31524654425417" y="451.3523829172684" font-family="Arial" font-size="10" fill="black">TFS:O06</text>
+<circle cx="115.57251908396947" cy="451.8134928821952" r="4" fill="blue" fill-opacity="0.6">
+<title>TFS:O07: -0.712 -> -0.514</title>
+</circle>
+<text x="120.57251908396947" y="446.8134928821952" font-family="Arial" font-size="10" fill="black">TFS:O07</text>
+<circle cx="79.72354033422735" cy="478.3041056323499" r="4" fill="blue" fill-opacity="0.6">
+<title>TFS:N08: -0.929 -> -0.675</title>
+</circle>
+<text x="84.72354033422735" y="473.3041056323499" font-family="Arial" font-size="10" fill="black">TFS:N08</text>
+<circle cx="479.4429544047864" cy="194.202599546111" r="4" fill="red" fill-opacity="0.6">
+<title>TFS:S09: 1.493 -> 1.046</title>
+</circle>
+<text x="484.4429544047864" y="189.202599546111" font-family="Arial" font-size="10" fill="black">TFS:S09</text>
+<circle cx="116.2657313802352" cy="456.3523829172684" r="4" fill="blue" fill-opacity="0.6">
+<title>TFS:O0A: -0.708 -> -0.542</title>
+</circle>
+<text x="121.2657313802352" y="451.3523829172684" font-family="Arial" font-size="10" fill="black">TFS:O0A</text>
+<circle cx="115.80358984939137" cy="456.2533525892304" r="4" fill="blue" fill-opacity="0.6">
+<title>TFS:O0B: -0.711 -> -0.541</title>
+</circle>
+<text x="120.80358984939137" y="451.2533525892304" font-family="Arial" font-size="10" fill="black">TFS:O0B</text>
+<circle cx="273.1462760470394" cy="320.33422735712816" r="4" fill="red" fill-opacity="0.6">
+<title>TFS:C0C: 0.243 -> 0.282</title>
+</circle>
+<circle cx="208.49597689292347" cy="388.1865071178048" r="4" fill="blue" fill-opacity="0.6">
+<title>TFS:F0D: -0.149 -> -0.129</title>
+</circle>
+<circle cx="208.18238085413657" cy="388.4175778832267" r="4" fill="blue" fill-opacity="0.6">
+<title>TFS:F0E: -0.151 -> -0.130</title>
+</circle>
+<circle cx="240.9449143800289" cy="391.1739220136167" r="4" fill="red" fill-opacity="0.6">
+<title>TFS:F0F: 0.048 -> -0.147</title>
+</circle>
+<text x="245.9449143800289" y="386.1739220136167" font-family="Arial" font-size="10" fill="black">TFS:F0F</text>
+<circle cx="112.28801320404374" cy="483.61873323705385" r="4" fill="blue" fill-opacity="0.6">
+<title>DFP:O01: -0.732 -> -0.707</title>
+</circle>
+<circle cx="346.494739013823" cy="186.62677945120691" r="4" fill="red" fill-opacity="0.6">
+<title>DFP:P02: 0.687 -> 1.092</title>
+</circle>
+<text x="351.494739013823" y="181.62677945120691" font-family="Arial" font-size="10" fill="black">DFP:P02</text>
+<circle cx="112.27150814937075" cy="483.61873323705385" r="4" fill="blue" fill-opacity="0.6">
+<title>DFP:O03: -0.732 -> -0.707</title>
+</circle>
+<circle cx="198.14730761295647" cy="422.8801320404374" r="4" fill="blue" fill-opacity="0.6">
+<title>DFP:F04: -0.212 -> -0.339</title>
+</circle>
+<circle cx="231.19042706828967" cy="422.8801320404374" r="4" fill="blue" fill-opacity="0.6">
+<title>DFP:F05: -0.011 -> -0.339</title>
+</circle>
+<text x="236.19042706828967" y="417.8801320404374" font-family="Arial" font-size="10" fill="black">DFP:F05</text>
+</svg>
