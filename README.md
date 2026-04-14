@@ -112,11 +112,11 @@ Each molecule produces a self-contained OpenMM force field XML:
 
 ```
 data/molecules/<NAME>/
-├── <NAME>.xml              ← Raw LigParGen XML (server output)
+├── <NAME>.xml              ← Raw LigParGen output
 ├── <NAME>.pdb              ← Raw LigParGen PDB
-├── monomer.pdb               ← PDB with element column + canonical atom names
+├── monomer.pdb             ← PDB with element column + canonical atom names
 └── monomer_<NAME>/
-    └── ff.xml                 ← ✅ OpenMM-compatible OPLS-AA XML (use this)
+    └── ff.xml               ← ✅ OpenMM-compatible OPLS-AA (use this)
 ```
 
 **To load in OpenMM:**
