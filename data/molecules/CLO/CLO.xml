@@ -1,0 +1,31 @@
+<?xml version="1.0" ?>
+<ForceField>
+  <AtomTypes>
+    <Type name="CL4" class="CL4" element="Cl" mass="35.450000" />
+    <Type name="OL4" class="OL4" element="O" mass="15.999000" />
+  </AtomTypes>
+  <Residues>
+    <Residue name="CLO">
+      <Atom name="Cl01" type="CL4" charge="0.795000" />
+      <Atom name="O02" type="OL4" charge="-0.386250" />
+      <Atom name="O03" type="OL4" charge="-0.386250" />
+      <Atom name="O04" type="OL4" charge="-0.386250" />
+      <Atom name="O05" type="OL4" charge="-0.386250" />
+      <Bond atomName1="Cl01" atomName2="O02" />
+      <Bond atomName1="Cl01" atomName2="O03" />
+      <Bond atomName1="Cl01" atomName2="O04" />
+      <Bond atomName1="Cl01" atomName2="O05" />
+    </Residue>
+  </Residues>
+  <CustomBondForce>
+    <Bond class1="CL4" class2="OL4" b0="0.144000" kb="400000.000000" />
+  </CustomBondForce>
+  <HarmonicAngleForce />
+  <CustomTorsionForce />
+  <CustomTorsionForce />
+  <CustomTorsionForce />
+  <NonbondedForce coulomb14scale="0.5" lj14scale="0.5">
+    <Atom type="CL4" sigma="0.407000" epsilon="0.100000" />
+    <Atom type="OL4" sigma="0.300000" epsilon="0.170000" />
+  </NonbondedForce>
+</ForceField>

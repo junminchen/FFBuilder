@@ -1,0 +1,34 @@
+<?xml version="1.0" ?>
+<ForceField>
+  <AtomTypes>
+    <Type name="FP" class="FP" element="F" mass="18.998000" />
+    <Type name="P" class="P" element="P" mass="30.974000" />
+    <Type name="opls_272" class="opls_272" element="O" mass="15.999400" />
+  </AtomTypes>
+  <Residues>
+    <Residue name="DFP">
+      <Atom name="O01" type="opls_272" charge="-0.548925" />
+      <Atom name="P02" type="P" charge="0.515325" />
+      <Atom name="O03" type="opls_272" charge="-0.549000" />
+      <Atom name="F04" type="FP" charge="-0.158775" />
+      <Atom name="F05" type="FP" charge="-0.008625" />
+      <Bond atomName1="O01" atomName2="P02" />
+      <Bond atomName1="P02" atomName2="O03" />
+      <Bond atomName1="P02" atomName2="F04" />
+      <Bond atomName1="P02" atomName2="F05" />
+    </Residue>
+  </Residues>
+  <CustomBondForce>
+    <Bond class1="opls_272" class2="P" b0="0.149000" kb="200622.800000" />
+    <Bond class1="FP" class2="P" b0="0.161000" kb="155000.000000" />
+  </CustomBondForce>
+  <HarmonicAngleForce />
+  <CustomTorsionForce />
+  <CustomTorsionForce />
+  <CustomTorsionForce />
+  <NonbondedForce coulomb14scale="0.5" lj14scale="0.5">
+    <Atom type="FP" sigma="0.311810" epsilon="0.255220" />
+    <Atom type="P" sigma="0.374000" epsilon="0.837000" />
+    <Atom type="opls_272" sigma="0.296000" epsilon="0.878640" />
+  </NonbondedForce>
+</ForceField>

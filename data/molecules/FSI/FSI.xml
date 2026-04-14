@@ -1,0 +1,45 @@
+<?xml version="1.0" ?>
+<ForceField>
+  <AtomTypes>
+    <Type name="FSI" class="FSI" element="F" mass="18.998000" />
+    <Type name="NBT" class="NBT" element="N" mass="14.000000" />
+    <Type name="OBT" class="OBT" element="O" mass="15.999000" />
+    <Type name="SBT" class="SBT" element="S" mass="32.066000" />
+  </AtomTypes>
+  <Residues>
+    <Residue name="FSI">
+      <Atom name="N01" type="NBT" charge="-0.711525" />
+      <Atom name="S02" type="SBT" charge="1.319625" />
+      <Atom name="O03" type="OBT" charge="-0.575625" />
+      <Atom name="O04" type="OBT" charge="-0.575925" />
+      <Atom name="F05" type="FSI" charge="-0.259200" />
+      <Atom name="S06" type="SBT" charge="1.303125" />
+      <Atom name="O07" type="OBT" charge="-0.571800" />
+      <Atom name="O08" type="OBT" charge="-0.577050" />
+      <Atom name="F09" type="FSI" charge="-0.101625" />
+      <Bond atomName1="N01" atomName2="S02" />
+      <Bond atomName1="N01" atomName2="S06" />
+      <Bond atomName1="S02" atomName2="O03" />
+      <Bond atomName1="S02" atomName2="O04" />
+      <Bond atomName1="S02" atomName2="F05" />
+      <Bond atomName1="S06" atomName2="O07" />
+      <Bond atomName1="S06" atomName2="O08" />
+      <Bond atomName1="S06" atomName2="F09" />
+    </Residue>
+  </Residues>
+  <CustomBondForce>
+    <Bond class1="SBT" class2="FSI" b0="0.158000" kb="93950.000000" />
+    <Bond class1="SBT" class2="OBT" b0="0.144000" kb="266550.000000" />
+    <Bond class1="SBT" class2="NBT" b0="0.157000" kb="156850.000000" />
+  </CustomBondForce>
+  <HarmonicAngleForce />
+  <CustomTorsionForce />
+  <CustomTorsionForce />
+  <CustomTorsionForce />
+  <NonbondedForce coulomb14scale="0.5" lj14scale="0.5">
+    <Atom type="FSI" sigma="0.295000" epsilon="0.221750" />
+    <Atom type="NBT" sigma="0.325000" epsilon="0.711280" />
+    <Atom type="OBT" sigma="0.296000" epsilon="0.878640" />
+    <Atom type="SBT" sigma="0.355000" epsilon="1.046000" />
+  </NonbondedForce>
+</ForceField>

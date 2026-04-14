@@ -1,0 +1,69 @@
+<?xml version="1.0" ?>
+<ForceField>
+  <AtomTypes>
+    <Type name="132" class="132" element="H" mass="1.008000" />
+    <Type name="133" class="133" element="H" mass="1.008000" />
+    <Type name="134" class="134" element="N" mass="14.007000" />
+    <Type name="135" class="135" element="C" mass="12.011000" />
+    <Type name="136" class="136" element="C" mass="12.011000" />
+    <Type name="137" class="137" element="C" mass="12.011000" />
+  </AtomTypes>
+  <Residues>
+    <Residue name="CN1">
+      <Atom name="H00" type="133" />
+      <Atom name="C01" type="137" />
+      <Atom name="C02" type="136" />
+      <Atom name="C03" type="135" />
+      <Atom name="H04" type="133" />
+      <Atom name="C05" type="136" />
+      <Atom name="H06" type="132" />
+      <Atom name="N07" type="134" />
+      <Atom name="C08" type="137" />
+      <Atom name="H09" type="132" />
+      <Atom name="C10" type="135" />
+      <Atom name="H11" type="133" />
+      <Atom name="H12" type="133" />
+      <Atom name="N13" type="134" />
+      <Bond from="0" to="1" />
+      <Bond from="1" to="2" />
+      <Bond from="1" to="3" />
+      <Bond from="1" to="4" />
+      <Bond from="2" to="5" />
+      <Bond from="2" to="6" />
+      <Bond from="3" to="7" />
+      <Bond from="5" to="8" />
+      <Bond from="5" to="9" />
+      <Bond from="8" to="10" />
+      <Bond from="8" to="11" />
+      <Bond from="8" to="12" />
+      <Bond from="10" to="13" />
+    </Residue>
+  </Residues>
+  <HarmonicBondForce>
+    <Bond class1="134" class2="135" length="0.115700" k="543920.000000" />
+    <Bond class1="136" class2="136" length="0.134000" k="459403.200000" />
+    <Bond class1="136" class2="137" length="0.151000" k="265265.600000" />
+    <Bond class1="132" class2="136" length="0.108000" k="284512.000000" />
+    <Bond class1="137" class2="133" length="0.109000" k="284512.000000" />
+    <Bond class1="135" class2="137" length="0.147000" k="326352.000000" />
+  </HarmonicBondForce>
+  <HarmonicAngleForce>
+    <Angle class1="136" class2="136" class3="132" angle="2.094395" k="292.880000" />
+    <Angle class1="136" class2="137" class3="135" angle="1.929985" k="432.207200" />
+    <Angle class1="137" class2="136" class3="136" angle="2.164208" k="585.760000" />
+    <Angle class1="137" class2="136" class3="132" angle="2.042035" k="292.880000" />
+    <Angle class1="137" class2="135" class3="134" angle="3.141593" k="1255.200000" />
+    <Angle class1="133" class2="137" class3="136" angle="1.911136" k="292.880000" />
+    <Angle class1="133" class2="137" class3="133" angle="1.881465" k="276.144000" />
+    <Angle class1="133" class2="137" class3="135" angle="1.893682" k="292.880000" />
+  </HarmonicAngleForce>
+  <PeriodicTorsionForce />
+  <NonbondedForce coulomb14scale="0.5" lj14scale="0.5">
+    <Atom type="132" charge="0.159650" sigma="0.250000" epsilon="0.125520" />
+    <Atom type="133" charge="0.134950" sigma="0.250000" epsilon="0.125520" />
+    <Atom type="134" charge="-0.347600" sigma="0.320000" epsilon="0.711280" />
+    <Atom type="135" charge="0.117000" sigma="0.330000" epsilon="0.276144" />
+    <Atom type="136" charge="-0.189750" sigma="0.355000" epsilon="0.317984" />
+    <Atom type="137" charge="-0.009300" sigma="0.350000" epsilon="0.276144" />
+  </NonbondedForce>
+</ForceField>

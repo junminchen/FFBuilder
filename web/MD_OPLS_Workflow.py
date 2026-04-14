@@ -27,6 +27,15 @@ try:
 except ImportError:
     molecules = {"FAN": "FCC#N"}
 
+# RESP support (optional)
+try:
+    sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    from native.resp.RESP_Workflow import process_molecule as calc_resp_charges
+    from utils.FFutils import get_molecule_charge, read_pdb_skeleton
+    RESP_AVAILABLE = True
+except ImportError:
+    RESP_AVAILABLE = False
+
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 def print_info(stage, message):
@@ -74,9 +83,13 @@ class OPLSWorkflow:
             file_map = dict(zip(go_vals, fileout_vals))
             mol_dir = os.path.join(self.mol_root, name)
             if not os.path.exists(mol_dir): os.makedirs(mol_dir)
+            # Save raw XML to temp, write PDB directly (will be fixed in stage 2)
             for label in ["XML", "PDB"]:
                 r = self.session.post(f"{self.base_url}/cgi-bin/download_lpg.py", data={'go': label, 'fileout': file_map[label]}, verify=False)
-                with open(os.path.join(mol_dir, f"{name}.{label.lower()}"), 'wb') as f: f.write(r.content)
+                if label == "XML":
+                    with open(os.path.join(mol_dir, f"{name}.xml"), 'wb') as f: f.write(r.content)
+                else:
+                    with open(os.path.join(mol_dir, f"{name}.pdb"), 'wb') as f: f.write(r.content)
             return True
         except Exception as e:
             print_info(name, f"Error: {e}"); return False
@@ -84,16 +97,15 @@ class OPLSWorkflow:
     def stage_2_fix_pdb(self, name):
         print_info(name, "Stage 2: Fixing PDB...")
         mol_dir = os.path.join(self.mol_root, name)
-        src_pdb = os.path.join(mol_dir, f"{name}.pdb")
+        pdb_file = os.path.join(mol_dir, f"{name}.pdb")
         try:
-            u = mda.Universe(src_pdb)
+            u = mda.Universe(pdb_file)
             if not hasattr(u, 'elements') or u.atoms.elements[0] == '':
                 u.add_TopologyAttr('elements', [mda.topology.guessers.guess_atom_element(a.name) for a in u.atoms])
             resid = (name + 'A')[:3].upper()
             for i, atom in enumerate(u.atoms): atom.name = atom.element + padding(i)
             u.atoms.residues.resnames = resid
-            u.atoms.write(os.path.join(mol_dir, "monomer.pdb"))
-            u.atoms.write(src_pdb)
+            u.atoms.write(pdb_file)
             return True
         except Exception: return False
 
@@ -101,9 +113,8 @@ class OPLSWorkflow:
         print_info(name, "Stage 3: Consolidating Symmetry...")
         mol_dir = os.path.join(self.mol_root, name)
         xml_file = os.path.join(mol_dir, f"{name}.xml")
-        target_xml = os.path.join(mol_dir, f"monomer_{name}", "ff.xml")
-        if not os.path.exists(os.path.dirname(target_xml)): os.makedirs(os.path.dirname(target_xml))
-        
+        target_xml = os.path.join(mol_dir, f"{name}.xml")
+
         dic_atypes = self._get_symmetry_dict(os.path.join(mol_dir, f"{name}.pdb"))
         if not dic_atypes: return False
         
@@ -159,6 +170,40 @@ class OPLSWorkflow:
         except Exception as e:
             print_info(name, f"FF Error: {e}"); return False
 
+    def stage_3b_resp_charges(self, name, smiles):
+        """Replace CM1A charges in <name>.xml with RESP charges."""
+        if not RESP_AVAILABLE:
+            print_info(name, "RESP not available, skipping.")
+            return False
+        print_info(name, "Stage 3b: Computing RESP charges...")
+        mol_dir = os.path.join(self.mol_root, name)
+        xml_file = os.path.join(mol_dir, f"{name}.xml")
+        if not os.path.exists(xml_file):
+            print_info(name, f"XML not found at {xml_file}, skipping RESP.")
+            return False
+        try:
+            total_charge = get_molecule_charge(name, smiles)
+            symbols, coords, resp_charges, _ = calc_resp_charges(name, smiles, total_charge)
+            tree = ET.parse(xml_file)
+            root = tree.getroot()
+            res = root.find(".//Residue")
+            if res is None:
+                print_info(name, "No Residue found in XML, skipping.")
+                return False
+            atoms = res.findall("Atom")
+            if len(atoms) != len(resp_charges):
+                print_info(name, f"Atom count mismatch ({len(atoms)} XML vs {len(resp_charges)} RESP), skipping.")
+                return False
+            for i, atom in enumerate(atoms):
+                atom.set("charge", f"{resp_charges[i]:.6f}")
+            xml_str = minidom.parseString(ET.tostring(root)).toprettyxml(indent="  ")
+            with open(xml_file, 'w') as f:
+                f.write("\n".join(l for l in xml_str.split("\n") if l.strip()))
+            print_info(name, f"RESP charges applied (total={sum(resp_charges):.4f}).")
+            return True
+        except Exception as e:
+            print_info(name, f"RESP Error: {e}"); return False
+
     def stage_4_incremental_merge(self):
         print("\n" + "="*50)
         print_info("GLOBAL", f"Stage 4: Incrementally merging into {self.update_xml_path}...")
@@ -187,7 +232,7 @@ class OPLSWorkflow:
                 print_info(name, "Already exists in base XML, skipping merge.")
                 continue
             
-            xml_file = os.path.join(self.mol_root, name, f"monomer_{name}", "ff.xml")
+            xml_file = os.path.join(self.mol_root, name, f"{name}.xml")
             if os.path.exists(xml_file):
                 print_info(name, "Appending new parameters to categories...")
                 mol_root = ET.parse(xml_file).getroot()
@@ -218,18 +263,25 @@ class OPLSWorkflow:
         print_info("GLOBAL", f"Incremental Merge Complete! Updated file: {self.update_xml_path}")
         print("="*50 + "\n")
 
-    def run(self):
+    def run(self, use_resp=False):
         for name, smiles in self.mol_dict.items():
-            out_dir = os.path.join(self.mol_root, name, f"monomer_{name}")
-            if os.path.exists(os.path.join(out_dir, "ff.xml")):
+            xml_cache = os.path.join(self.mol_root, name, f"{name}.xml")
+            pdb_cache = os.path.join(self.mol_root, name, f"{name}.pdb")
+            if os.path.exists(xml_cache) and os.path.exists(pdb_cache):
                 print_info(name, "Cache hit, skipping.")
                 continue
             if self.stage_1_download(name, smiles):
                 self.stage_2_fix_pdb(name)
                 self.stage_3_consolidate_ff(name)
+                if use_resp:
+                    self.stage_3b_resp_charges(name, smiles)
                 time.sleep(5)
-        print_info("DONE", f"XML files → {self.mol_root}/<name>/monomer_<name>/ff.xml")
+        print_info("DONE", f"XML files → {self.mol_root}/<name>/<name>.xml")
 
 if __name__ == "__main__":
+    import argparse
+    parser = argparse.ArgumentParser(description="OPLS ForceField Workflow via traken.yale.edu")
+    parser.add_argument("-r", "--resp", action="store_true", help="Compute RESP charges and replace CM1A charges in XML")
+    args = parser.parse_args()
     workflow = OPLSWorkflow(molecules)
-    workflow.run()
+    workflow.run(use_resp=args.resp)

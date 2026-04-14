@@ -1,0 +1,56 @@
+<?xml version="1.0" ?>
+<ForceField>
+  <AtomTypes>
+    <Type name="2009il_B" class="2009il_B" element="B" mass="10.811000" />
+    <Type name="opls_141" class="opls_141" element="C" mass="12.011000" />
+    <Type name="opls_180" class="opls_180" element="O" mass="15.999400" />
+    <Type name="opls_272" class="opls_272" element="O" mass="15.999400" />
+  </AtomTypes>
+  <Residues>
+    <Residue name="BOB">
+      <Atom name="B01" type="2009il_B" charge="0.200175" />
+      <Atom name="O02" type="opls_180" charge="-0.209550" />
+      <Atom name="C03" type="opls_141" charge="0.254700" />
+      <Atom name="O04" type="opls_272" charge="-0.320250" />
+      <Atom name="C05" type="opls_141" charge="0.254475" />
+      <Atom name="O06" type="opls_272" charge="-0.320175" />
+      <Atom name="O07" type="opls_180" charge="-0.209775" />
+      <Atom name="O08" type="opls_180" charge="-0.209175" />
+      <Atom name="C09" type="opls_141" charge="0.254625" />
+      <Atom name="O0A" type="opls_272" charge="-0.320325" />
+      <Atom name="C0B" type="opls_141" charge="0.254550" />
+      <Atom name="O0C" type="opls_272" charge="-0.320100" />
+      <Atom name="O0D" type="opls_180" charge="-0.059175" />
+      <Bond atomName1="B01" atomName2="O02" />
+      <Bond atomName1="B01" atomName2="O07" />
+      <Bond atomName1="B01" atomName2="O08" />
+      <Bond atomName1="B01" atomName2="O0D" />
+      <Bond atomName1="C03" atomName2="O04" />
+      <Bond atomName1="C05" atomName2="O06" />
+      <Bond atomName1="C09" atomName2="O0A" />
+      <Bond atomName1="C0B" atomName2="O0C" />
+      <Bond atomName1="O02" atomName2="C03" />
+      <Bond atomName1="C03" atomName2="C05" />
+      <Bond atomName1="C05" atomName2="O07" />
+      <Bond atomName1="O08" atomName2="C09" />
+      <Bond atomName1="C09" atomName2="C0B" />
+      <Bond atomName1="C0B" atomName2="O0D" />
+    </Residue>
+  </Residues>
+  <CustomBondForce>
+    <Bond class1="2009il_B" class2="opls_180" b0="0.146774" kb="1000000.000000" />
+    <Bond class1="opls_180" class2="opls_141" b0="0.137000" kb="188280.000000" />
+    <Bond class1="opls_141" class2="opls_272" b0="0.121991" kb="1000000.000000" />
+    <Bond class1="opls_141" class2="opls_141" b0="0.134000" kb="229701.600000" />
+  </CustomBondForce>
+  <HarmonicAngleForce />
+  <CustomTorsionForce />
+  <CustomTorsionForce />
+  <CustomTorsionForce />
+  <NonbondedForce coulomb14scale="0.5" lj14scale="0.5">
+    <Atom type="2009il_B" sigma="0.358140" epsilon="0.397480" />
+    <Atom type="opls_141" sigma="0.355000" epsilon="0.317984" />
+    <Atom type="opls_180" sigma="0.290000" epsilon="0.585760" />
+    <Atom type="opls_272" sigma="0.296000" epsilon="0.878640" />
+  </NonbondedForce>
+</ForceField>

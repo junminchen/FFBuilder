@@ -1,0 +1,80 @@
+<?xml version="1.0" ?>
+<ForceField>
+  <AtomTypes>
+    <Type name="119" class="119" element="H" mass="1.008000" />
+    <Type name="120" class="120" element="O" mass="15.999000" />
+    <Type name="121" class="121" element="F" mass="18.998403" />
+    <Type name="122" class="122" element="O" mass="15.999000" />
+    <Type name="123" class="123" element="C" mass="12.011000" />
+    <Type name="124" class="124" element="C" mass="12.011000" />
+    <Type name="125" class="125" element="C" mass="12.011000" />
+  </AtomTypes>
+  <Residues>
+    <Residue name="HFD">
+      <Atom name="C00" type="125" />
+      <Atom name="C01" type="124" />
+      <Atom name="F02" type="121" />
+      <Atom name="F03" type="121" />
+      <Atom name="F04" type="121" />
+      <Atom name="O05" type="122" />
+      <Atom name="C06" type="123" />
+      <Atom name="O07" type="120" />
+      <Atom name="O08" type="122" />
+      <Atom name="C09" type="125" />
+      <Atom name="C10" type="124" />
+      <Atom name="F11" type="121" />
+      <Atom name="F12" type="121" />
+      <Atom name="F13" type="121" />
+      <Atom name="H14" type="119" />
+      <Atom name="H15" type="119" />
+      <Atom name="H16" type="119" />
+      <Atom name="H17" type="119" />
+      <Bond from="0" to="1" />
+      <Bond from="1" to="2" />
+      <Bond from="1" to="3" />
+      <Bond from="1" to="4" />
+      <Bond from="0" to="5" />
+      <Bond from="5" to="6" />
+      <Bond from="6" to="7" />
+      <Bond from="6" to="8" />
+      <Bond from="8" to="9" />
+      <Bond from="9" to="10" />
+      <Bond from="10" to="11" />
+      <Bond from="10" to="12" />
+      <Bond from="10" to="13" />
+      <Bond from="0" to="14" />
+      <Bond from="0" to="15" />
+      <Bond from="9" to="16" />
+      <Bond from="9" to="17" />
+    </Residue>
+  </Residues>
+  <HarmonicBondForce>
+    <Bond class1="122" class2="125" length="0.141000" k="267776.000000" />
+    <Bond class1="121" class2="124" length="0.136000" k="307105.600000" />
+    <Bond class1="123" class2="122" length="0.132700" k="179075.200000" />
+    <Bond class1="119" class2="125" length="0.109000" k="284512.000000" />
+    <Bond class1="120" class2="123" length="0.122900" k="476976.000000" />
+    <Bond class1="124" class2="125" length="0.152900" k="224262.400000" />
+  </HarmonicBondForce>
+  <HarmonicAngleForce>
+    <Angle class1="125" class2="122" class3="123" angle="2.040290" k="694.544000" />
+    <Angle class1="125" class2="124" class3="121" angle="1.911136" k="418.400000" />
+    <Angle class1="122" class2="125" class3="119" angle="1.911136" k="292.880000" />
+    <Angle class1="122" class2="123" class3="122" angle="2.062630" k="584.923200" />
+    <Angle class1="122" class2="123" class3="120" angle="2.153736" k="694.544000" />
+    <Angle class1="121" class2="124" class3="121" angle="1.904154" k="644.336000" />
+    <Angle class1="119" class2="125" class3="119" angle="1.881465" k="276.144000" />
+    <Angle class1="124" class2="125" class3="122" angle="1.911136" k="418.400000" />
+    <Angle class1="124" class2="125" class3="119" angle="1.932079" k="313.800000" />
+  </HarmonicAngleForce>
+  <PeriodicTorsionForce />
+  <NonbondedForce coulomb14scale="0.5" lj14scale="0.5">
+    <Atom type="119" charge="0.168850" sigma="0.250000" epsilon="0.125520" />
+    <Atom type="120" charge="-0.468500" sigma="0.296000" epsilon="0.878640" />
+    <Atom type="121" charge="-0.154150" sigma="0.290000" epsilon="0.251040" />
+    <Atom type="122" charge="-0.284300" sigma="0.290000" epsilon="0.585760" />
+    <Atom type="123" charge="0.563300" sigma="0.355000" epsilon="0.292880" />
+    <Atom type="124" charge="0.424450" sigma="0.350000" epsilon="0.276144" />
+    <Atom type="125" charge="-0.062700" sigma="0.350000" epsilon="0.276144" />
+  </NonbondedForce>
+</ForceField>

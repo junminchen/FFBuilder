@@ -1,0 +1,50 @@
+<?xml version="1.0" ?>
+<ForceField>
+  <AtomTypes>
+    <Type name="FP1" class="FP1" element="F" mass="18.998000" />
+    <Type name="FP3" class="FP3" element="F" mass="18.998000" />
+    <Type name="FP4" class="FP4" element="F" mass="18.998000" />
+    <Type name="FP5" class="FP5" element="F" mass="18.998000" />
+    <Type name="FP6" class="FP6" element="F" mass="18.998000" />
+    <Type name="FP7" class="FP7" element="F" mass="18.998000" />
+    <Type name="P" class="P" element="P" mass="30.974000" />
+  </AtomTypes>
+  <Residues>
+    <Residue name="PF6">
+      <Atom name="P01" type="P" charge="1.005000" />
+      <Atom name="F02" type="FP1" charge="-0.292500" />
+      <Atom name="F03" type="FP3" charge="-0.292500" />
+      <Atom name="F04" type="FP4" charge="-0.292500" />
+      <Atom name="F05" type="FP5" charge="-0.292500" />
+      <Atom name="F06" type="FP6" charge="-0.292500" />
+      <Atom name="F07" type="FP7" charge="-0.292500" />
+      <Bond atomName1="P01" atomName2="F02" />
+      <Bond atomName1="P01" atomName2="F03" />
+      <Bond atomName1="P01" atomName2="F04" />
+      <Bond atomName1="P01" atomName2="F05" />
+      <Bond atomName1="P01" atomName2="F06" />
+      <Bond atomName1="P01" atomName2="F07" />
+    </Residue>
+  </Residues>
+  <CustomBondForce>
+    <Bond class1="FP6" class2="P" b0="0.161000" kb="155000.000000" />
+    <Bond class1="FP7" class2="P" b0="0.161000" kb="155000.000000" />
+    <Bond class1="FP5" class2="P" b0="0.161000" kb="155000.000000" />
+    <Bond class1="FP1" class2="P" b0="0.161000" kb="155000.000000" />
+    <Bond class1="FP4" class2="P" b0="0.161000" kb="155000.000000" />
+    <Bond class1="FP3" class2="P" b0="0.161000" kb="155000.000000" />
+  </CustomBondForce>
+  <HarmonicAngleForce />
+  <CustomTorsionForce />
+  <CustomTorsionForce />
+  <CustomTorsionForce />
+  <NonbondedForce coulomb14scale="0.5" lj14scale="0.5">
+    <Atom type="FP1" sigma="0.311810" epsilon="0.255220" />
+    <Atom type="FP3" sigma="0.311810" epsilon="0.255220" />
+    <Atom type="FP4" sigma="0.311810" epsilon="0.255220" />
+    <Atom type="FP5" sigma="0.311810" epsilon="0.255220" />
+    <Atom type="FP6" sigma="0.311810" epsilon="0.255220" />
+    <Atom type="FP7" sigma="0.311810" epsilon="0.255220" />
+    <Atom type="P" sigma="0.374000" epsilon="0.837000" />
+  </NonbondedForce>
+</ForceField>

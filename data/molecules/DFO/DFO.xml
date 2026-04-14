@@ -1,0 +1,50 @@
+<?xml version="1.0" ?>
+<ForceField>
+  <AtomTypes>
+    <Type name="2009il_B" class="2009il_B" element="B" mass="10.811000" />
+    <Type name="2009il_FB" class="2009il_FB" element="F" mass="18.998000" />
+    <Type name="opls_141" class="opls_141" element="C" mass="12.011000" />
+    <Type name="opls_180" class="opls_180" element="O" mass="15.999400" />
+    <Type name="opls_272" class="opls_272" element="O" mass="15.999400" />
+  </AtomTypes>
+  <Residues>
+    <Residue name="DFO">
+      <Atom name="F01" type="2009il_FB" charge="-0.257175" />
+      <Atom name="B02" type="2009il_B" charge="0.207300" />
+      <Atom name="O03" type="opls_180" charge="-0.213375" />
+      <Atom name="C04" type="opls_141" charge="0.253800" />
+      <Atom name="C05" type="opls_141" charge="0.253650" />
+      <Atom name="O06" type="opls_180" charge="-0.213225" />
+      <Atom name="O07" type="opls_272" charge="-0.337200" />
+      <Atom name="O08" type="opls_272" charge="-0.337350" />
+      <Atom name="F09" type="2009il_FB" charge="-0.106425" />
+      <Bond atomName1="F01" atomName2="B02" />
+      <Bond atomName1="B02" atomName2="F09" />
+      <Bond atomName1="O03" atomName2="C04" />
+      <Bond atomName1="C04" atomName2="C05" />
+      <Bond atomName1="C05" atomName2="O06" />
+      <Bond atomName1="B02" atomName2="O03" />
+      <Bond atomName1="B02" atomName2="O06" />
+      <Bond atomName1="C04" atomName2="O08" />
+      <Bond atomName1="C05" atomName2="O07" />
+    </Residue>
+  </Residues>
+  <CustomBondForce>
+    <Bond class1="2009il_B" class2="opls_180" b0="0.146774" kb="1000000.000000" />
+    <Bond class1="opls_180" class2="opls_141" b0="0.137000" kb="188280.000000" />
+    <Bond class1="2009il_FB" class2="2009il_B" b0="0.139000" kb="161750.000000" />
+    <Bond class1="opls_141" class2="opls_272" b0="0.121991" kb="1000000.000000" />
+    <Bond class1="opls_141" class2="opls_141" b0="0.134000" kb="229701.600000" />
+  </CustomBondForce>
+  <HarmonicAngleForce />
+  <CustomTorsionForce />
+  <CustomTorsionForce />
+  <CustomTorsionForce />
+  <NonbondedForce coulomb14scale="0.5" lj14scale="0.5">
+    <Atom type="2009il_B" sigma="0.358140" epsilon="0.397480" />
+    <Atom type="2009il_FB" sigma="0.311810" epsilon="0.251040" />
+    <Atom type="opls_141" sigma="0.355000" epsilon="0.317984" />
+    <Atom type="opls_180" sigma="0.290000" epsilon="0.585760" />
+    <Atom type="opls_272" sigma="0.296000" epsilon="0.878640" />
+  </NonbondedForce>
+</ForceField>

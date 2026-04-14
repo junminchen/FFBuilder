@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+<ForceField>
+  <AtomTypes>
+    <Type name="Li+" class="Li+" element="Li" mass="6.941000" />
+  </AtomTypes>
+  <Residues>
+    <Residue name="LIA">
+      <Atom name="Li01" type="Li+" charge="0.750000" />
+    </Residue>
+  </Residues>
+  <CustomBondForce />
+  <HarmonicAngleForce />
+  <CustomTorsionForce />
+  <CustomTorsionForce />
+  <CustomTorsionForce />
+  <NonbondedForce coulomb14scale="0.5" lj14scale="0.5">
+    <Atom type="Li+" sigma="0.212600" epsilon="0.076480" />
+  </NonbondedForce>
+</ForceField>

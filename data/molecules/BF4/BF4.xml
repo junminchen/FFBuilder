@@ -1,0 +1,31 @@
+<?xml version="1.0" ?>
+<ForceField>
+  <AtomTypes>
+    <Type name="B" class="B" element="B" mass="10.811000" />
+    <Type name="FB" class="FB" element="F" mass="18.998000" />
+  </AtomTypes>
+  <Residues>
+    <Residue name="BF4">
+      <Atom name="B01" type="B" charge="0.214275" />
+      <Atom name="F02" type="FB" charge="-0.278775" />
+      <Atom name="F03" type="FB" charge="-0.278850" />
+      <Atom name="F04" type="FB" charge="-0.278625" />
+      <Atom name="F05" type="FB" charge="-0.128025" />
+      <Bond atomName1="B01" atomName2="F02" />
+      <Bond atomName1="B01" atomName2="F03" />
+      <Bond atomName1="B01" atomName2="F04" />
+      <Bond atomName1="B01" atomName2="F05" />
+    </Residue>
+  </Residues>
+  <CustomBondForce>
+    <Bond class1="B" class2="FB" b0="0.139000" kb="161750.000000" />
+  </CustomBondForce>
+  <HarmonicAngleForce />
+  <CustomTorsionForce />
+  <CustomTorsionForce />
+  <CustomTorsionForce />
+  <NonbondedForce coulomb14scale="0.5" lj14scale="0.5">
+    <Atom type="B" sigma="0.358140" epsilon="0.397480" />
+    <Atom type="FB" sigma="0.311810" epsilon="0.251040" />
+  </NonbondedForce>
+</ForceField>

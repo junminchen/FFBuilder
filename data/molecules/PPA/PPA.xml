@@ -1,0 +1,113 @@
+<?xml version="1.0" ?>
+<ForceField>
+  <AtomTypes>
+    <Type name="52" class="52" element="H" mass="1.008000" />
+    <Type name="53" class="53" element="H" mass="1.008000" />
+    <Type name="54" class="54" element="H" mass="1.008000" />
+    <Type name="55" class="55" element="H" mass="1.008000" />
+    <Type name="56" class="56" element="H" mass="1.008000" />
+    <Type name="57" class="57" element="O" mass="15.999000" />
+    <Type name="58" class="58" element="O" mass="15.999000" />
+    <Type name="59" class="59" element="C" mass="12.011000" />
+    <Type name="60" class="60" element="C" mass="12.011000" />
+    <Type name="61" class="61" element="C" mass="12.011000" />
+    <Type name="62" class="62" element="C" mass="12.011000" />
+    <Type name="63" class="63" element="C" mass="12.011000" />
+    <Type name="64" class="64" element="C" mass="12.011000" />
+  </AtomTypes>
+  <Residues>
+    <Residue name="PPA">
+      <Atom name="C00" type="61" />
+      <Atom name="C01" type="64" />
+      <Atom name="C02" type="62" />
+      <Atom name="O03" type="58" />
+      <Atom name="C04" type="59" />
+      <Atom name="O05" type="57" />
+      <Atom name="C06" type="63" />
+      <Atom name="C07" type="60" />
+      <Atom name="H08" type="53" />
+      <Atom name="H09" type="53" />
+      <Atom name="H10" type="53" />
+      <Atom name="H11" type="56" />
+      <Atom name="H12" type="56" />
+      <Atom name="H13" type="54" />
+      <Atom name="H14" type="54" />
+      <Atom name="H15" type="55" />
+      <Atom name="H16" type="55" />
+      <Atom name="H17" type="52" />
+      <Atom name="H18" type="52" />
+      <Atom name="H19" type="52" />
+      <Bond from="0" to="1" />
+      <Bond from="1" to="2" />
+      <Bond from="2" to="3" />
+      <Bond from="3" to="4" />
+      <Bond from="4" to="5" />
+      <Bond from="4" to="6" />
+      <Bond from="6" to="7" />
+      <Bond from="0" to="8" />
+      <Bond from="0" to="9" />
+      <Bond from="0" to="10" />
+      <Bond from="1" to="11" />
+      <Bond from="1" to="12" />
+      <Bond from="2" to="13" />
+      <Bond from="2" to="14" />
+      <Bond from="6" to="15" />
+      <Bond from="6" to="16" />
+      <Bond from="7" to="17" />
+      <Bond from="7" to="18" />
+      <Bond from="7" to="19" />
+    </Residue>
+  </Residues>
+  <HarmonicBondForce>
+    <Bond class1="56" class2="64" length="0.109000" k="284512.000000" />
+    <Bond class1="55" class2="63" length="0.109000" k="284512.000000" />
+    <Bond class1="64" class2="61" length="0.152900" k="224262.400000" />
+    <Bond class1="60" class2="63" length="0.152900" k="224262.400000" />
+    <Bond class1="54" class2="62" length="0.109000" k="284512.000000" />
+    <Bond class1="63" class2="59" length="0.152200" k="265265.600000" />
+    <Bond class1="59" class2="58" length="0.132700" k="179075.200000" />
+    <Bond class1="57" class2="59" length="0.122900" k="476976.000000" />
+    <Bond class1="62" class2="64" length="0.152900" k="224262.400000" />
+    <Bond class1="58" class2="62" length="0.141000" k="267776.000000" />
+    <Bond class1="52" class2="60" length="0.109000" k="284512.000000" />
+    <Bond class1="53" class2="61" length="0.109000" k="284512.000000" />
+  </HarmonicBondForce>
+  <HarmonicAngleForce>
+    <Angle class1="56" class2="64" class3="56" angle="1.881465" k="276.144000" />
+    <Angle class1="61" class2="64" class3="56" angle="1.932079" k="313.800000" />
+    <Angle class1="61" class2="64" class3="62" angle="1.966986" k="488.272800" />
+    <Angle class1="55" class2="63" class3="55" angle="1.881465" k="276.144000" />
+    <Angle class1="64" class2="61" class3="53" angle="1.932079" k="313.800000" />
+    <Angle class1="64" class2="62" class3="54" angle="1.932079" k="313.800000" />
+    <Angle class1="64" class2="62" class3="58" angle="1.911136" k="418.400000" />
+    <Angle class1="60" class2="63" class3="55" angle="1.932079" k="313.800000" />
+    <Angle class1="54" class2="62" class3="54" angle="1.881465" k="276.144000" />
+    <Angle class1="63" class2="60" class3="52" angle="1.932079" k="313.800000" />
+    <Angle class1="59" class2="63" class3="55" angle="1.911136" k="292.880000" />
+    <Angle class1="59" class2="63" class3="60" angle="1.939061" k="527.184000" />
+    <Angle class1="57" class2="59" class3="63" angle="2.101376" k="669.440000" />
+    <Angle class1="62" class2="64" class3="56" angle="1.932079" k="313.800000" />
+    <Angle class1="62" class2="58" class3="59" angle="2.040290" k="694.544000" />
+    <Angle class1="58" class2="59" class3="63" angle="1.944297" k="677.808000" />
+    <Angle class1="58" class2="59" class3="57" angle="2.153736" k="694.544000" />
+    <Angle class1="58" class2="62" class3="54" angle="1.911136" k="292.880000" />
+    <Angle class1="52" class2="60" class3="52" angle="1.881465" k="276.144000" />
+    <Angle class1="53" class2="61" class3="53" angle="1.881465" k="276.144000" />
+  </HarmonicAngleForce>
+  <PeriodicTorsionForce />
+  <NonbondedForce coulomb14scale="0.5" lj14scale="0.5">
+    <Atom type="52" charge="0.095800" sigma="0.250000" epsilon="0.125520" />
+    <Atom type="53" charge="0.085700" sigma="0.250000" epsilon="0.125520" />
+    <Atom type="54" charge="0.115000" sigma="0.250000" epsilon="0.125520" />
+    <Atom type="55" charge="0.131000" sigma="0.250000" epsilon="0.125520" />
+    <Atom type="56" charge="0.103800" sigma="0.250000" epsilon="0.125520" />
+    <Atom type="57" charge="-0.447200" sigma="0.296000" epsilon="0.878640" />
+    <Atom type="58" charge="-0.363900" sigma="0.290000" epsilon="0.585760" />
+    <Atom type="59" charge="0.436500" sigma="0.355000" epsilon="0.292880" />
+    <Atom type="60" charge="-0.236400" sigma="0.350000" epsilon="0.276144" />
+    <Atom type="61" charge="-0.235000" sigma="0.350000" epsilon="0.276144" />
+    <Atom type="62" charge="0.005000" sigma="0.350000" epsilon="0.276144" />
+    <Atom type="63" charge="-0.190900" sigma="0.350000" epsilon="0.276144" />
+    <Atom type="64" charge="-0.212000" sigma="0.350000" epsilon="0.276144" />
+  </NonbondedForce>
+</ForceField>
