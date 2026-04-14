@@ -27,5 +27,6 @@ Thumbs.db
 .vscode/
 .idea/
 
-# BOSS (user-specific)
+# BOSS (user-specific) — extract from boss0824.tar.gz in native/ligpargen_local/
 BOSS/
+native/ligpargen_local/boss0824.tar.gz
