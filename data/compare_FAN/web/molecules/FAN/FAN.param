@@ -1,0 +1,50 @@
+Remarks LigParGen generated XPLOR-TOP file for Bonvin group (by Leela Dodda)
+
+set echo=false end 
+
+{ Bonds: atomType1 atomType2 kb r0 } 
+BOND   C801   F800    367.0   1.3600 
+BOND   C802   C801    390.0   1.4700 
+BOND   N803   C802    650.0   1.1570 
+BOND   H804   C801    340.0   1.0900 
+BOND   H805   C801    340.0   1.0900 
+
+{ Angles: aType1 aType2 aType3 kt t0 }
+ANGLe  F800  C801  C802     51.6   110.58 
+ANGLe  C801  C802  N803    150.0   180.00 
+ANGLe  F800  C801  H804     40.0   107.00 
+ANGLe  F800  C801  H805     40.0   107.00 
+ANGLe  H804  C801  H805     33.0   107.80 
+ANGLe  C802  C801  H804     35.0   108.50 
+ANGLe  C802  C801  H805     35.0   108.50 
+
+{ Proper Dihedrals: aType1 aType2 aType3 aType4 kt period phase } 
+DIHEdral N803   C802   C801   F800  MULT 4   0.000     1   0.00 
+                                             0.000     2   180.00 
+                                             0.000     3   0.00 
+                                             0.000     4   180.00 
+DIHEdral H805   C801   C802   N803  MULT 4   0.000     1   0.00 
+                                             0.000     2   180.00 
+                                             0.000     3   0.00 
+                                             0.000     4   180.00 
+DIHEdral H804   C801   C802   N803  MULT 4   0.000     1   0.00 
+                                             0.000     2   180.00 
+                                             0.000     3   0.00 
+                                             0.000     4   180.00 
+DIHEdral    X      X      X      X  MULT 1   0.000     1     0.00 ! WILD CARD FOR MISSING TORSION PARAMETERS
+
+{ Improper Dihedrals: aType1 aType2 aType3 aType4 kt period phase }
+IMPRoper H804   C801   F800   C802 0.00000 2 180.00000 
+IMPRoper H805   C801   F800   C802 0.00000 2 180.00000 
+IMPRoper    X      X      X      X  0.000     1     0.00  ! WILD CARD FOR MISSING IMPROPER PARAMETERS 
+
+{ Nonbonded: Type Emin sigma; (1-4): Emin/2 sigma }
+NONBonded  F800    0.060000    2.900000    0.030000    2.900000 
+NONBonded  C801    0.066000    3.500000    0.033000    3.500000 
+NONBonded  C802    0.066000    3.300000    0.033000    3.300000 
+NONBonded  N803    0.170000    3.200000    0.085000    3.200000 
+NONBonded  H804    0.030000    2.500000    0.015000    2.500000 
+NONBonded  H805    0.030000    2.500000    0.015000    2.500000 
+
+set echo=true end 
+

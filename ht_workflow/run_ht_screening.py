@@ -3,10 +3,10 @@ import os
 import sys
 import argparse
 
-# Add the current directory to sys.path to allow imports from ht_screening
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+# Add the project root to sys.path to allow imports
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from ht_screening.ht_workflow import HighThroughputWorkflow
+from ht_workflow.ht_workflow import HighThroughputWorkflow
 
 def main():
     parser = argparse.ArgumentParser(description="High Throughput Workflow for FFBuilder")

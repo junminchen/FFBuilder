@@ -1,0 +1,31 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyc
+
+# Distribution / packaging
+*.egg-info/
+
+# Force field outputs (user-generated)
+data/forcefields/*.xml
+data/forcefields/*.xml.backup
+
+# Batches (user-generated)
+batches/
+candidates.txt
+training_data.csv
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# BOSS (user-specific)
+BOSS/

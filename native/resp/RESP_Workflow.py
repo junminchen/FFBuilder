@@ -1,7 +1,11 @@
 import os
 import sys
 import numpy as np
-from FFutils import read_pdb_skeleton, generate_ff_xml
+
+# Add project root to path
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+
+from utils.FFutils import read_pdb_skeleton, generate_ff_xml
 
 # Optional dependencies
 try:

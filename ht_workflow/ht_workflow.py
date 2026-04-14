@@ -9,13 +9,19 @@ import pandas as pd
 
 from .ligpargen_local import create_long_smiles, run_ligpargen_local, extract_parameters_from_lpg_xml
 from .screening import suggest_next
-from forcefield import ForceFieldManager
+import sys
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
+from utils.forcefield import ForceFieldManager
 
 try:
-    from mol_db import mol_db
+    from data.mol_db import mol_db
     MOL_DB_AVAILABLE = True
 except ImportError:
-    MOL_DB_AVAILABLE = False
+    try:
+        from mol_db import mol_db
+        MOL_DB_AVAILABLE = True
+    except ImportError:
+        MOL_DB_AVAILABLE = False
 
 class BatchManager:
     def __init__(self, root_dir: str = "batches"):

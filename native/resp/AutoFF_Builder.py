@@ -1,8 +1,16 @@
 import os
 import sys
-from mol_db import mol_db
-from RESP_Workflow import process_molecule
-from FFutils import get_molecule_charge, generate_ff_xml, ensure_mol_dir
+
+# Add project root to path
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+
+try:
+    from data.mol_db import mol_db
+except ImportError:
+    from mol_db import mol_db
+
+from native.resp.RESP_Workflow import process_molecule
+from utils.FFutils import get_molecule_charge, generate_ff_xml, ensure_mol_dir
 
 def run_workflow(limit=10):
     count = 0

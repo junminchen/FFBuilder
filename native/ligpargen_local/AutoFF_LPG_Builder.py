@@ -4,13 +4,21 @@ import sys
 import argparse
 import xml.etree.ElementTree as ET
 import xml.dom.minidom as minidom
-from mol_db import mol_db
-from FFutils import get_molecule_charge, ensure_mol_dir
-from ht_screening.ligpargen_local import run_ligpargen_local, extract_parameters_from_lpg_xml
+
+# Add project root to path
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+
+try:
+    from data.mol_db import mol_db
+except ImportError:
+    from mol_db import mol_db
+
+from utils.FFutils import get_molecule_charge, ensure_mol_dir
+from ht_workflow.ligpargen_local import run_ligpargen_local, extract_parameters_from_lpg_xml
 
 def build_all_lpg(limit=10, base_ff="opls_solvent.xml"):
-    update_ff_path = os.path.join("forcefields", "opls_lpg_update.xml")
-    base_ff_path = os.path.join("forcefields", base_ff)
+    update_ff_path = os.path.join("data", "forcefields", "opls_lpg_update.xml")
+    base_ff_path = os.path.join("data", "forcefields", base_ff)
     
     # Load base or existing update
     source_path = update_ff_path if os.path.exists(update_ff_path) else base_ff_path

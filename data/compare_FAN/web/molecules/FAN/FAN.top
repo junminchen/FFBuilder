@@ -1,0 +1,40 @@
+Remarks LigParGen generated XPLOR-TOP file for Bonvin group (by Leela Dodda)
+
+set echo=false end
+
+autogenerate angles=True dihedrals=True end
+{ atomType  mass }
+MASS F800 18.9984 
+MASS C801 12.0110 
+MASS C802 12.0110 
+MASS N803 14.0070 
+MASS H804 1.0080 
+MASS H805 1.0080 
+
+RESIdue   UNK
+
+GROUP
+
+{ atomName  atomType  Charge } 
+ATOM    F00 TYPE=   F800 CHARGE=   -0.147 END
+ATOM    C01 TYPE=   C801 CHARGE=   0.1538 END
+ATOM    C02 TYPE=   C802 CHARGE=   0.0799 END
+ATOM    N03 TYPE=   N803 CHARGE=  -0.3431 END
+ATOM    H04 TYPE=   H804 CHARGE=   0.1282 END
+ATOM    H05 TYPE=   H805 CHARGE=   0.1282 END
+
+{ Bonds: atomName1  atomName2 } 
+BOND C01 F00 
+BOND C02 C01 
+BOND N03 C02 
+BOND H04 C01 
+BOND H05 C01 
+
+{ Improper Dihedrals: aName1 aName2 aName3 aName4 }
+IMPRoper C01 F00 C02 H04 
+IMPRoper C01 F00 C02 H05 
+
+END {RESIdue UNK}
+
+set echo=true end
+

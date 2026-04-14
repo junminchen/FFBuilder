@@ -2,9 +2,17 @@ import os
 import sys
 import numpy as np
 import xml.etree.ElementTree as ET
-from mol_db import mol_db
-from RESP_Workflow import process_molecule
-from FFutils import get_molecule_charge
+
+# Add project root to path
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+try:
+    from data.mol_db import mol_db
+except ImportError:
+    from mol_db import mol_db
+
+from native.resp.RESP_Workflow import process_molecule
+from utils.FFutils import get_molecule_charge
 
 def update_xml_charges(in_path, out_path):
     print(f"\n--- Updating {in_path} -> {out_path} ---")
