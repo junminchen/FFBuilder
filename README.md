@@ -1,6 +1,6 @@
 # FFBuilder
 
-> Automated Force Field Builder for OPLS-AA MD simulations — with **BOSS-dependent** (LigParGen local) and **BOSS-free** (Web LigParGen, RESP) pipelines.
+> Automated OPLS-AA force field generation for molecular dynamics — with **BOSS-free** (web LigParGen) and **BOSS-dependent** (local LigParGen, RESP) pipelines.
 
 ---
 
@@ -8,43 +8,45 @@
 
 ```
 FFBuilder/
-├── README.md              ← This file
+├── README.md
 ├── .gitignore
-├── handoff.md             ← Legacy notes
 │
-├── data/                  ← Molecule & force field data
-│   ├── mol_db.py          ← 107 electrolyte molecules (salts + solvents)
-│   ├── molecules/         ← .pdb / .mol structure files
-│   ├── forcefields/        ← Output XML force field files
-│   └── compare_FAN/        ← FAN comparison results (Web LigParGen)
+├── data/                      ← All data: molecules, force fields, examples
+│   ├── mol_db.py              ← 107 pre-defined electrolyte molecules
+│   ├── molecules/             ← Per-molecule working dirs (see Output below)
+│   ├── forcefields/           ← Base OPLS-AA XML files
+│   ├── compare_FAN/           ← FAN(FCC#N) comparison results
+│   ├── examples/              ← Electrolyte bulk system example
+│   └── ETH.mol
 │
-├── utils/                  ← Shared utilities
-│   ├── FFutils.py         ← Charge detection, XML generation, PDB skeleton
-│   ├── forcefield.py      ← ForceFieldManager class
-│   ├── build_electrolyte.py
-│   ├── run_MD_bulk.py
-│   ├── compare_charges.py
-│   ├── generate_parity_svg.py
-│   ├── update_opls_resp.py
-│   └── mol_list.py
+├── web/                       ← BOSS-free pipeline (network required)
+│   └── MD_OPLS_Workflow.py    ← traken.chem.yale.edu LigParGen web scraper
 │
-├── native/                 ← BOSS-dependent (local LigParGen + RESP)
+├── native/                    ← BOSS-dependent pipelines
 │   ├── ligpargen_local/
-│   │   ├── LigParGen_2.3/  ← LigParGen v2.3 Python package
+│   │   ├── LigParGen_2.3/     ← LigParGen v2.3 Python package
+│   │   ├── boss0824.tar.gz     ← BOSS 5.1 distribution (extract to ~/BOSS/)
 │   │   └── AutoFF_LPG_Builder.py
 │   └── resp/
-│       ├── RESP_Workflow.py
-│       └── AutoFF_Builder.py
+│       ├── RESP_Workflow.py   ← RESP/AM1-BCC charge workflow
+│       └── AutoFF_Builder.py  ← RESP batch builder
 │
-├── web/                    ← BOSS-free (traken.chem.yale.edu)
-│   └── MD_OPLS_Workflow.py
+├── ht_workflow/               ← Active learning screening (GPR + EI)
+│   ├── screening.py            ← Morgan FP + PCA + GPR + Expected Improvement
+│   ├── ht_workflow.py         ← Batch orchestration
+│   ├── ht_utils.py            ← Simulation result checker (template)
+│   ├── ligpargen_local.py     ← Local LigParGen wrapper
+│   └── run_ht_screening.py    ← CLI entry point
 │
-└── ht_workflow/            ← Active learning screening (GPR + EI)
-    ├── screening.py         ← Morgan FP + PCA + GPR + Expected Improvement
-    ├── ht_workflow.py      ← Batch orchestration
-    ├── ht_utils.py         ← Simulation result checker (template)
-    ├── ligpargen_local.py   ← Local LigParGen wrapper
-    └── run_ht_screening.py ← CLI entry point
+└── utils/                      ← Shared utilities
+    ├── FFutils.py             ← Charge detection, XML generation, PDB skeleton
+    ├── forcefield.py          ← ForceFieldManager (OpenMM XML loading/merging)
+    ├── build_electrolyte.py   ← Electrolyte system builder
+    ├── run_MD_bulk.py         ← MD batch runner
+    ├── compare_charges.py     ← Charge comparison tool
+    ├── generate_parity_svg.py
+    ├── update_opls_resp.py
+    └── mol_list.py
 ```
 
 ---
@@ -52,11 +54,12 @@ FFBuilder/
 ## Quick Start
 
 ```bash
+# Clone
 git clone https://github.com/junminchen/FFBuilder.git
 cd FFBuilder
 
-# Create environment
-conda create -n ffbuilder -c rdkit -c conda-forge rdkit openbabel pandas numpy
+# Environment
+conda create -n ffbuilder -c rdkit -c conda-forge rdkit openbabel pandas numpy requests
 conda activate ffbuilder
 
 # Install
@@ -67,62 +70,117 @@ pip install -e ./native/ligpargen_local/LigParGen_2.3
 
 ## Three Pipelines
 
-| Pipeline | Charge Method | BOSS Required | Output |
-|----------|--------------|---------------|--------|
-| **Web LigParGen** | CM1A (server-side) | ❌ No | Per-molecule XML |
-| **LigParGen Local** | CM1A / CM1A-LBCC | ✅ Yes | Per-molecule XML |
-| **RESP** | RESP / AM1-BCC | ❌ No | Per-molecule XML |
+| Pipeline | Charge | BOSS | Network | Output |
+|----------|--------|------|---------|--------|
+| **Web LigParGen** | CM1A | ❌ | ✅ | Per-molecule XML |
+| **Local LigParGen** | CM1A / CM1A-LBCC / CM5 | ✅ | After setup | Per-molecule XML |
+| **RESP** | RESP / AM1-BCC | ❌ | ❌ | Per-molecule XML |
 
 ---
 
-### Pipeline 1: Web LigParGen (BOSS-free)
+## Pipeline 1: Web LigParGen (BOSS-free)
 
-Uses Yale's web server — no BOSS needed, just network access.
+> Network access required. CM1A charges generated server-side at Yale.
 
-```bash
-# Single molecule
-python web/MD_OPLS_Workflow.py
-# → data/compare_FAN/web/molecules/FAN/FAN.xml
+```python
+from web.MD_OPLS_Workflow import OPLSWorkflow
 
-# Batch from mol_db
-python -c "
+wf = OPLSWorkflow({'FAN': 'FCC#N', 'FEC': 'FCC1OC1O1'})
+wf.run()
+```
+
+Or from `mol_db.py`:
+
+```python
 from web.MD_OPLS_Workflow import OPLSWorkflow
 from data.mol_db import mol_db
+
 wf = OPLSWorkflow(mol_db)
 wf.run()
-"
 ```
 
-**Requirements:** `requests`, `beautifulsoup4`, `MDAnalysis`, `rdkit`
+Or CLI:
 
-> ⚠️ Known issue: traken.chem.yale.edu HTML uses double-quote attributes (not escaped). Use raw regex extraction:
-> ```python
-> import re
-> fileouts = re.findall(r'name="fileout" value="([^"]+)"', res.text)
-> ```
+```bash
+# Edit utils/mol_list.py first to set your molecules
+python web/MD_OPLS_Workflow.py
+```
+
+### Output
+
+Each molecule produces a self-contained OpenMM force field XML:
+
+```
+data/molecules/<NAME>/
+├── <NAME>.xml              ← Raw LigParGen XML (server output)
+├── <NAME>.pdb              ← Raw LigParGen PDB
+├── monomer.pdb               ← PDB with element column + canonical atom names
+└── monomer_<NAME>/
+    └── ff.xml                 ← ✅ OpenMM-compatible OPLS-AA XML (use this)
+```
+
+**To load in OpenMM:**
+
+```python
+from openmm.app import ForceField
+ff = ForceField('data/molecules/FAN/monomer_FAN/ff.xml')
+```
+
+**To merge multiple molecules in OpenMM at runtime:**
+
+```python
+from openmm.app import ForceField
+ff1 = ForceField('data/molecules/FAN/monomer_FAN/ff.xml')
+ff2 = ForceField('data/molecules/FEC/monomer_FEC/ff.xml')
+# OpenMM does not natively support merging — use utils/forcefield.py:
+from utils.forcefield import ForceFieldManager
+mgr = ForceFieldManager()
+mgr.load_ff('data/molecules/FAN/monomer_FAN/ff.xml')
+mgr.load_ff('data/molecules/FEC/monomer_FEC/ff.xml')
+mgr.save('data/forcefields/custom_combined.xml')
+```
+
+### Input Format
+
+`mol_dict` is a plain `dict`:
+
+```python
+{'NAME': 'SMILES', ...}
+# e.g. {'FAN': 'FCC#N', 'FEC': 'FCC1OC1O1', 'Li': '[Li+]'}
+```
+
+For salt molecules, use `[Li+]` (cation) or `[Fluorine-]`/`[BF4-]` etc. (anion) with net charge automatically detected.
 
 ---
 
-### Pipeline 2: LigParGen Local (BOSS required)
+## Pipeline 2: Local LigParGen (BOSS required)
 
-Runs LigParGen 2.3 locally. **BOSS software required.**
+### BOSS Setup
 
-#### BOSS Installation
+BOSS is a Fortran/C quantum chemistry program (Yale Jorgensen lab). Binaries are **32-bit Linux ELF** — requires Linux or Docker.
+
+**Option A: Docker**
 
 ```bash
-# BOSS is a Fortran/C quantum chemistry program (Yale Jorgensen lab)
-# Binaries are 32-bit Linux ELF → requires Linux or Docker
-
-# Option A: Docker
-docker run -it -v $(pwd):/work i386/ubuntu:18.04
-apt-get install -y csh openjdk python3
-# Install BOSS inside container
-
-# Option B: Remote SSH
-# Point to your HPC with BOSS installed
+cd native/ligpargen_local
+docker build -t ligpargen .
+docker run -v $(pwd)/../../../data:/data ligpargen bash -c "export BOSSdir=/root/BOSS/boss && python native/ligpargen_local/AutoFF_LPG_Builder.py"
 ```
 
-#### Usage
+**Option B: Remote SSH**
+
+Point to an HPC with BOSS installed:
+
+```python
+import subprocess
+
+def run_ligpargen_remote(smiles, name, res_name='UNK', charge=0):
+    cmd = f"export BOSSdir=~/BOSS/boss && LigParGen -s '{smiles}' -r {res_name} -c {charge} -o 0 -l"
+    result = subprocess.run(['ssh', 'your-hpc', cmd], capture_output=True)
+    return result.returncode == 0
+```
+
+### Usage
 
 ```bash
 export BOSSdir=~/BOSS/boss
@@ -141,21 +199,28 @@ python native/ligpargen_local/AutoFF_LPG_Builder.py --limit 10
 
 ---
 
-### Pipeline 3: RESP (BOSS-free, custom QM charges)
+## Pipeline 3: RESP (BOSS-free, custom QM charges)
 
-Uses RESP/AM1-BCC charges from your own QM calculations. No BOSS needed.
+Uses RESP or AM1-BCC charges from your own QM calculations. No BOSS needed.
 
-```bash
-# With external QM charge files
-python -c "
+**Requirements:** `rdkit`, `psi4` (optional, for on-the-fly QM), OR pre-computed charge files.
+
+```python
 from native.resp.RESP_Workflow import load_qm_charges, process_molecule, assign_charges_to_mol
 from utils.FFutils import generate_ff_xml
 
+# Load charges from ORCA/Psi4 output
 charges = load_qm_charges('FAN_orca.chg', method='RESP')
 symbols, coords, _, rd_mol = process_molecule('FAN', 'FCC#N', charge=0)
 atom_charges = assign_charges_to_mol(rd_mol, charges)
-generate_ff_xml('FAN', symbols, coords, atom_charges, rd_mol, 'FAN.xml')
-"
+generate_ff_xml('FAN', symbols, coords, atom_charges, rd_mol,
+                 'data/molecules/FAN/monomer_FAN/ff.xml')
+```
+
+Or batch:
+
+```bash
+python native/resp/AutoFF_Builder.py --limit 10
 ```
 
 ---
@@ -166,17 +231,19 @@ generate_ff_xml('FAN', symbols, coords, atom_charges, rd_mol, 'FAN.xml')
 # 1. Prepare candidates
 echo "CCCC\nCCCCCO\nc1ccccc1" > candidates.txt
 
-# 2. (Optional) Provide training data
+# 2. (Optional) Training data: smiles + property to predict
 echo "smiles,property" > training_data.csv
 echo "CCO,0.5" >> training_data.csv
 
 # 3. Run one iteration
 python ht_workflow/run_ht_screening.py -c candidates.txt -t training_data.csv -n 3
 # → batches/batch0/suggested_smiles.txt
-# → data/forcefields/opls_ht_update.xml
+# → data/molecules/<NAME>/monomer_<NAME>/ff.xml
 ```
 
-Active learning uses **GPR + Expected Improvement** over Morgan fingerprints (2048-bit, radius=2) with PCA → 50D reduction. Currently a **single-shot** loop — multi-round iteration requires implementing `ht_utils.py` to read simulation results back into `training_data.csv`.
+Active learning uses **GPR + Expected Improvement** over Morgan fingerprints (2048-bit, radius=2) with PCA → 50D reduction.
+
+⚠️ **Single-shot by default.** Multi-round iteration requires implementing `ht_utils.py` to read simulation results back into `training_data.csv`.
 
 ---
 
@@ -187,13 +254,11 @@ from data.mol_db import mol_db, salts, solvents
 print(f"Total: {len(mol_db)} molecules ({len(salts)} salts + {len(solvents)} solvents)")
 ```
 
-SMILES use RDKit atom indices (`[C:1]`, `[O:2]`) for charge assignment.
-
 ---
 
-## Force Field Output
+## Force Field XML Format
 
-Both pipelines produce **OpenMM-compatible OPLS-AA XML**:
+Both pipelines produce OpenMM-compatible XML:
 
 ```xml
 <ForceField>
@@ -202,13 +267,13 @@ Both pipelines produce **OpenMM-compatible OPLS-AA XML**:
   </AtomTypes>
   <Residues>
     <Residue name="FAN">
-      <Atom name="F1" type="FAN_1" charge="-0.1325"/>
+      <Atom name="F00" type="FAN_1" charge="-0.147000"/>
     </Residue>
   </Residues>
   <HarmonicBondForce>...</HarmonicBondForce>
   <HarmonicAngleForce>...</HarmonicAngleForce>
   <PeriodicTorsionForce>...</PeriodicTorsionForce>
-  <NonbondedForce>...</NonbondedForce>
+  <NonbondedForce coulomb14scale="0.5" lj14scale="0.5">...</NonbondedForce>
 </ForceField>
 ```
 
@@ -218,10 +283,21 @@ Both pipelines produce **OpenMM-compatible OPLS-AA XML**:
 
 | Aspect | Web LigParGen | Local LigParGen |
 |--------|--------------|-----------------|
-| Charge method | CM1A (server-side) | CM1A / CM1A-LBCC (BOSS) |
-| CM5 charges | ❌ | ✅ Via ORCA (`-q QORCA`) |
+| Charge | CM1A (server) | CM1A / CM1A-LBCC / CM5 |
+| CM5 charges | ❌ | ✅ (`-q QORCA`) |
 | Network | Required | Not after setup |
-| Batch size | Rate-limited | Unlimited |
+| Batch | Rate-limited | Unlimited |
+| Speed | ~5-10s/mol | ~5s/mol |
+
+---
+
+## Known Issues
+
+### traken.chem.yale.edu parsing
+The server uses separate `<input type="hidden">` (fileout) and `<input type="submit">` (go) tags — not grouped inside `<form>` elements. Regex `zip(go_vals, fileout_vals)` is the reliable parsing method.
+
+### BOSS on macOS
+BOSS 5.1 binaries are **32-bit Linux ELF**. Cannot run natively on macOS (Apple Silicon or Intel). Use Docker or a Linux VM/HPC.
 
 ---
 

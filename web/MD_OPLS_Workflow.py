@@ -2,6 +2,7 @@
 import os
 import sys
 import time
+import re
 import shutil
 import requests
 import urllib3
@@ -11,11 +12,12 @@ import xml.dom.minidom as minidom
 from rdkit import Chem
 from rdkit.Chem import AllChem
 import MDAnalysis as mda
-from bs4 import BeautifulSoup
 
-# 尝试导入用户定义的分子列表
+# Try loading user-defined molecule list
 try:
-    import mol_list
+    import sys as _sys
+    _sys.path.insert(0, os.path.dirname(__file__))
+    import utils.mol_list as mol_list
     if hasattr(mol_list, 'smiles_batch'):
         molecules = mol_list.smiles_batch
     elif hasattr(mol_list, 'molecules'):
@@ -34,30 +36,15 @@ def padding(n):
     return str(n).zfill(2)
 
 class OPLSWorkflow:
-    def __init__(self, mol_dict, base_name="opls_solvent.xml", update_name="opls_solvent_update.xml"):
+    def __init__(self, mol_dict):
         self.mol_dict = mol_dict
-        self.base_xml_path = os.path.join("forcefields", base_name)
-        self.update_xml_path = os.path.join("forcefields", update_name)
-        self.mol_root = "molecules"
+        # Paths are relative to project root (parent of web/)
+        project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        self.mol_root = os.path.join(project_root, "data", "molecules")
         self.base_url = "https://traken.chem.yale.edu"
         self.session = requests.Session()
         
         if not os.path.exists(self.mol_root): os.makedirs(self.mol_root)
-        if not os.path.exists("forcefields"): os.makedirs("forcefields")
-        
-        # 自动检测起始 atomtype 索引
-        self.start_atypes = self._detect_start_atype()
-        print_info("INIT", f"Detected max atomtype ID, starting from: {self.start_atypes}")
-
-    def _detect_start_atype(self):
-        default_start = 300
-        path = self.base_xml_path if os.path.exists(self.base_xml_path) else None
-        if not path: return default_start
-        try:
-            tree = ET.parse(path)
-            ids = [int(t.get('name')) for t in tree.getroot().findall('.//Type') if t.get('name').isdigit()]
-            return max(300, max(ids) + 1) if ids else default_start
-        except Exception: return default_start
 
     def _get_symmetry_dict(self, pdb_path):
         mol = Chem.MolFromPDBFile(pdb_path, sanitize=False)
@@ -77,12 +64,14 @@ class OPLSWorkflow:
         payload = {'smiData': (None, smiles), 'molpdbfile': ('', b''), 'checkopt': (None, ' 0 '), 'chargetype': (None, 'cm1abcc'), 'dropcharge': (None, ' 0 ')}
         try:
             res = self.session.post(f"{self.base_url}/cgi-bin/results_lpg.py", files=payload, timeout=300, verify=False)
-            soup = BeautifulSoup(res.text, 'html.parser')
-            file_map = {f.find('input', {'name': 'go'})['value'].strip(): f.find('input', {'name': 'fileout'})['value'].strip() 
-                        for f in soup.find_all('form', action='download_lpg.py') if f.find('input', {'name': 'go'})}
-            if "XML" not in file_map:
-                print_info(name, f"Download failed: XML not in file_map. Soup contains {file_map.keys()}")
+            # traken.yale.edu: go (submit) and fileout (hidden) are SEPARATE <input> tags
+            # → pair them by appearance order (zip), not by form grouping
+            go_vals = re.findall(r'<input type="submit"[^>]+name="go"[^>]+value="([^"]+)"', res.text)
+            fileout_vals = re.findall(r'<input type="hidden"[^>]+name="fileout"[^>]+value="([^"]+)"', res.text)
+            if not fileout_vals or "XML" not in go_vals:
+                print_info(name, f"Download failed: no XML in go_vals {go_vals}")
                 return False
+            file_map = dict(zip(go_vals, fileout_vals))
             mol_dir = os.path.join(self.mol_root, name)
             if not os.path.exists(mol_dir): os.makedirs(mol_dir)
             for label in ["XML", "PDB"]:
@@ -231,14 +220,15 @@ class OPLSWorkflow:
 
     def run(self):
         for name, smiles in self.mol_dict.items():
-            if not os.path.exists(os.path.join(self.mol_root, name, f"monomer_{name}", "ff.xml")):
-                if self.stage_1_download(name, smiles):
-                    self.stage_2_fix_pdb(name)
-                    self.stage_3_consolidate_ff(name)
-                    time.sleep(5)
-            else:
-                print_info(name, "Cache found, ready for incremental merge.")
-        self.stage_4_incremental_merge()
+            out_dir = os.path.join(self.mol_root, name, f"monomer_{name}")
+            if os.path.exists(os.path.join(out_dir, "ff.xml")):
+                print_info(name, "Cache hit, skipping.")
+                continue
+            if self.stage_1_download(name, smiles):
+                self.stage_2_fix_pdb(name)
+                self.stage_3_consolidate_ff(name)
+                time.sleep(5)
+        print_info("DONE", f"XML files → {self.mol_root}/<name>/monomer_<name>/ff.xml")
 
 if __name__ == "__main__":
     workflow = OPLSWorkflow(molecules)
